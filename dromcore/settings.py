@@ -19,6 +19,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Регистрация приложений
+    'spareparts.apps.SparepartsConfig',
 ]
 
 MIDDLEWARE = [
