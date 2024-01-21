@@ -22,6 +22,7 @@ INSTALLED_APPS = [
 
     # Регистрация приложений
     'spareparts.apps.SparepartsConfig',
+    'cars.apps.CarsConfig',
 ]
 
 MIDDLEWARE = [
