@@ -1,11 +1,45 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
+from datetime import date
 
 """ Модели для хранения информации об автомобилях """
 
+# Список видов топлива для модели CarPost
+FUEL = [
+    ('n', 'Не указано'),
+    ('g', 'Бензин'),
+    ('d', 'Дизель'),
+    ('e', 'Электро'),
+    ('h', 'Гибрид'),
+]
+
+# Список типов коробок переключения передач для модели CarPost
+TRANSMISSION = [
+    ('n', 'Не указано'),
+    ('a', 'Автомат'),
+    ('r', 'Робот'),
+    ('v', 'Вариатор'),
+    ('m', 'Механика'),
+]
+
+# Список типов привода для модели CarPost
+DRIVE = [
+    ('n', 'Не указано'),
+    ('a', 'Полный'),
+    ('r', 'Задний'),
+    ('f', 'Передний'),
+]
+
+# Список расположения руля для модели CarPost
+STEERING_WHEEL = [
+    ('n', 'Не указано'),
+    ('l', 'Левый'),
+    ('r', 'Правый'),
+]
 
 # Класс для хранения типа кузова
 class ChassisType(models.Model):
-    name = models.CharField(verbose_name='Кузов', max_length=10)
+    name = models.CharField(verbose_name='Кузов', max_length=10, unique=True)
 
     def __str__(self):
         return self.name
@@ -15,9 +49,21 @@ class ChassisType(models.Model):
         verbose_name_plural = 'Типы кузовов'
 
 
+class City(models.Model):
+    name = models.CharField(verbose_name='Город', max_length=120, unique=True)
+    region = models.CharField(verbose_name='Область', max_length=120, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Город'
+        verbose_name_plural = 'Города'
+
+
 # Класс для хранения марки
 class CarBrand(models.Model):
-    name = models.CharField(verbose_name='Марка')
+    name = models.CharField(verbose_name='Марка', max_length=30, unique=True)
 
     def __str__(self):
         return self.name
@@ -29,7 +75,7 @@ class CarBrand(models.Model):
 
 # Класс для хранения моделей авто
 class CarModel(models.Model):
-    name = models.CharField(verbose_name='Модель')
+    name = models.CharField(verbose_name='Модель', max_length=60, unique=True)
     car_brand = models.ForeignKey(CarBrand, verbose_name='Марка',
                                   related_name='brand', max_length=15,
                                   on_delete=models.PROTECT)
@@ -44,7 +90,7 @@ class CarModel(models.Model):
 
 # Класс для хранения поколения модели авто
 class CarGeneration(models.Model):
-    name = models.CharField(verbose_name='Поколение')
+    name = models.CharField(verbose_name='Поколение', max_length=30, unique=True)
     car_model = models.ForeignKey(CarModel, verbose_name='Модель',
                                   related_name='generation', max_length=15,
                                   on_delete=models.PROTECT)
@@ -59,4 +105,25 @@ class CarGeneration(models.Model):
 
 # Класс для хранения объявления о продаже автомобиля
 class CarPost(models.Model):
-    pass
+    car_brand = models.ForeignKey(CarBrand, verbose_name='Марка авто', on_delete=models.PROTECT)
+    car_model = models.ForeignKey(CarModel, verbose_name='Модель авто', on_delete=models.PROTECT)
+    year_of_issue = models.PositiveSmallIntegerField(verbose_name='Год выпуска', validators=[MaxValueValidator(date.today().year), MinValueValidator(1900)])
+    city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
+    price = models.PositiveIntegerField(verbose_name='Стоимость')
+    fuel = models.CharField(verbose_name='Тип топлива', max_length=1, choices=FUEL, default='n')
+    engine_capacity = models.DecimalField(verbose_name='Объем двигателя (л)', max_digits=2, decimal_places=1, null=True, blank=True)
+    engine_power = models.PositiveSmallIntegerField(verbose_name='Мощность двигателя (л.с.)', validators=[MaxValueValidator(999), MinValueValidator(1)])
+    transmission = models.CharField(verbose_name='Тип трансмиссии', max_length=1, choices=TRANSMISSION, default='n')
+    drive = models.CharField(verbose_name='Тип привода', max_length=1, choices=DRIVE, default='n')
+    chassis_type = models.ForeignKey(ChassisType, verbose_name='Тип кузова', on_delete=models.PROTECT)
+    color = models.CharField(verbose_name='Цвет кузова', max_length=20)
+    mileage = models.PositiveIntegerField(verbose_name='Пробег')
+    steering_wheel = models.CharField(verbose_name='Расположение руля', max_length=1, choices=STEERING_WHEEL, default='n')
+    generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f'{self.car_brand} {self.car_model} | {self.year_of_issue} года выпуска'
+
+    class Meta:
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Объявления'
