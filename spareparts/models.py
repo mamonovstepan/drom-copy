@@ -1,4 +1,5 @@
 from django.db import models
+from cities.models import City
 from django.contrib.auth.models import User
 
 
@@ -30,7 +31,7 @@ class SparePart(models.Model):
     price = models.PositiveIntegerField(verbose_name='Цена')
     image = models.ImageField(verbose_name='Фото', upload_to=upload_path)
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
-    city = models.CharField(verbose_name='Город', max_length=30)
+    city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
     fit_for = models.CharField(verbose_name='Подходит для', max_length=255)
     description = models.CharField(verbose_name='Описание', max_length=450)
