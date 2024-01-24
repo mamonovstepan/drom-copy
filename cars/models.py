@@ -1,6 +1,7 @@
 from datetime import date
 from django.db import models
 from cities.models import City
+from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Список видов топлива для модели CarPost
@@ -110,6 +111,7 @@ class CarPost(models.Model):
     mileage = models.PositiveIntegerField(verbose_name='Пробег')
     steering_wheel = models.CharField(verbose_name='Расположение руля', max_length=1, choices=STEERING_WHEEL, default='n')
     generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
+    author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
 
     def __str__(self):
         return f'{self.car_brand} {self.car_model} | {self.year_of_issue} года выпуска'
