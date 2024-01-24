@@ -1,7 +1,15 @@
+from datetime import date
 from django.db import models
 from cities.models import City
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
+# Список видов топлива для модели MotorcyclePost
+FUEL = [
+    ('n', 'Не указано'),
+    ('g', 'Бензин'),
+    ('e', 'Электро'),
+]
 
 # Список хранящий тактность мотора мотоцикла
 STROKE = [
@@ -49,3 +57,24 @@ class MotorcycleModel(models.Model):
     class Meta:
         verbose_name = 'Модель'
         verbose_name_plural = 'Модели'
+
+
+class MotorcyclePost(models.Model):
+    moto_brand = models.ForeignKey(MotorcycleBrand, verbose_name='Марка мотоцикла', on_delete=models.PROTECT)
+    moto_model = models.ForeignKey(MotorcycleModel, verbose_name='Модель мотоцикла', on_delete=models.PROTECT)
+    year_of_issue = models.PositiveSmallIntegerField(verbose_name='Год выпуска', validators=[MaxValueValidator(date.today().year), MinValueValidator(1900)])
+    city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
+    price = models.PositiveIntegerField(verbose_name='Стоимость')
+    fuel = models.CharField(verbose_name='Тип топлива', max_length=1, choices=FUEL, default='n')
+    engine_capacity = models.PositiveSmallIntegerField(verbose_name='Объем двигателя (куб. см.)', validators=[MaxValueValidator(2000), MinValueValidator(1)], null=True, blank=True)
+    stroke = models.CharField(verbose_name='Количество тактов', max_length=1, choices=STROKE, default='n')
+    moto_class = models.ForeignKey(MotorcycleClass, verbose_name='Класс мотоцикла', on_delete=models.PROTECT)
+    mileage = models.PositiveIntegerField(verbose_name='Пробег')
+    author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.moto_brand} {self.moto_model} | {self.year_of_issue} года выпуска'
+
+    class Meta:
+        verbose_name = 'Объявление'
+        verbose_name_plural = 'Объявления'
