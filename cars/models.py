@@ -2,8 +2,6 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import date
 
-""" Модели для хранения информации об автомобилях """
-
 # Список видов топлива для модели CarPost
 FUEL = [
     ('n', 'Не указано'),
@@ -36,6 +34,9 @@ STEERING_WHEEL = [
     ('l', 'Левый'),
     ('r', 'Правый'),
 ]
+
+""" Модели для хранения информации об автомобилях """
+
 
 # Класс для хранения типа кузова
 class ChassisType(models.Model):
