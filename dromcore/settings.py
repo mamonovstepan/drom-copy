@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'spareparts.apps.SparepartsConfig',
     'cars.apps.CarsConfig',
     'motos.apps.MotosConfig',
+    'cities.apps.CitiesConfig',
 ]
 
 MIDDLEWARE = [
