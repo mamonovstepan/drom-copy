@@ -1,6 +1,7 @@
-from django.db import models
-from django.core.validators import MaxValueValidator, MinValueValidator
 from datetime import date
+from django.db import models
+from cities.models import City
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Список видов топлива для модели CarPost
 FUEL = [
@@ -48,18 +49,6 @@ class ChassisType(models.Model):
     class Meta:
         verbose_name = 'Тип кузова'
         verbose_name_plural = 'Типы кузовов'
-
-
-class City(models.Model):
-    name = models.CharField(verbose_name='Город', max_length=120, unique=True)
-    region = models.CharField(verbose_name='Область', max_length=120, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Город'
-        verbose_name_plural = 'Города'
 
 
 # Класс для хранения марки

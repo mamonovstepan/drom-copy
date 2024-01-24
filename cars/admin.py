@@ -5,7 +5,6 @@ admin.site.register(m.ChassisType)
 admin.site.register(m.CarBrand)
 admin.site.register(m.CarModel)
 admin.site.register(m.CarGeneration)
-admin.site.register(m.City)
 
 
 @admin.register(m.CarPost)
