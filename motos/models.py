@@ -17,6 +17,12 @@ STROKE = [
     (4, '4-тактный'),
 ]
 
+# Список хранящий состояние мотоцикла
+CONDITION = [
+        ('new', 'Новый'),
+        ('old', 'Б/У'),
+    ]
+
 """ Модели для хранения информации о мотоциклах """
 
 
@@ -71,6 +77,9 @@ class MotorcyclePost(models.Model):
     moto_class = models.ForeignKey(MotorcycleClass, verbose_name='Класс мотоцикла', on_delete=models.PROTECT)
     mileage = models.PositiveIntegerField(verbose_name='Пробег')
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
+    in_stock = models.BooleanField(verbose_name='Наличие', default=True)
+    condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
+    pts = models.BooleanField(verbose_name='Наличие ПТС', default=True)
 
     def __str__(self):
         return f'{self.moto_brand} {self.moto_model} | {self.year_of_issue} года выпуска'
