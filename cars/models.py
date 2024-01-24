@@ -37,6 +37,12 @@ STEERING_WHEEL = [
     ('r', 'Правый'),
 ]
 
+# Список хранящий состояние автомобиля
+CONDITION = [
+        ('new', 'Новый'),
+        ('old', 'Б/У'),
+    ]
+
 """ Модели для хранения информации об автомобилях """
 
 
@@ -112,6 +118,7 @@ class CarPost(models.Model):
     steering_wheel = models.CharField(verbose_name='Расположение руля', max_length=1, choices=STEERING_WHEEL, default='n')
     generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
+    condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
 
     def __str__(self):
         return f'{self.car_brand} {self.car_model} | {self.year_of_issue} года выпуска'
