@@ -37,6 +37,7 @@ class SparePart(models.Model):
     description = models.CharField(verbose_name='Описание', max_length=450)
     publication_date = models.DateTimeField(verbose_name='Дата публикации', auto_now_add=True)
     type_of_transport = models.ForeignKey(TypeOfTransport, verbose_name='Тип транспорта', on_delete=models.CASCADE)
+    on_sale = models.BooleanField(verbose_name='В продаже', default=True)
 
     class Meta:
         verbose_name = 'Запчасть'
