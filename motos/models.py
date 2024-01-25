@@ -65,6 +65,11 @@ class MotorcycleModel(models.Model):
         verbose_name_plural = 'Модели'
 
 
+# Функция для составления пути сохранения фото в соответствии с пользователем
+def upload_path(instance, filename):
+    return f'SpareParts/{instance.author.username}/{filename}'
+
+
 class MotorcyclePost(models.Model):
     moto_brand = models.ForeignKey(MotorcycleBrand, verbose_name='Марка мотоцикла', on_delete=models.PROTECT)
     moto_model = models.ForeignKey(MotorcycleModel, verbose_name='Модель мотоцикла', on_delete=models.PROTECT)
@@ -80,6 +85,7 @@ class MotorcyclePost(models.Model):
     in_stock = models.BooleanField(verbose_name='Наличие', default=True)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
     pts = models.BooleanField(verbose_name='Наличие ПТС', default=True)
+    image = models.ImageField(verbose_name='Фото', upload_to=upload_path)
 
     def __str__(self):
         return f'{self.moto_brand} {self.moto_model} | {self.year_of_issue} года выпуска'

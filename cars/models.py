@@ -100,6 +100,11 @@ class CarGeneration(models.Model):
         verbose_name_plural = 'Поколения'
 
 
+# Функция для составления пути сохранения фото в соответствии с пользователем
+def upload_path(instance, filename):
+    return f'SpareParts/{instance.author.username}/{filename}'
+
+
 # Класс для хранения объявления о продаже автомобиля
 class CarPost(models.Model):
     car_brand = models.ForeignKey(CarBrand, verbose_name='Марка авто', on_delete=models.PROTECT)
@@ -119,6 +124,7 @@ class CarPost(models.Model):
     generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
+    image = models.ImageField(verbose_name='Фото', upload_to=upload_path)
 
     def __str__(self):
         return f'{self.car_brand} {self.car_model} | {self.year_of_issue} года выпуска'
