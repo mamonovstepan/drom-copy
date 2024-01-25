@@ -125,6 +125,9 @@ class CarPost(models.Model):
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
     image = models.ImageField(verbose_name='Фото', upload_to=upload_path)
+    pts = models.BooleanField(verbose_name='Наличие ПТС', default=True)
+    is_damgaed = models.BooleanField(verbose_name='Певреждения (на ходу или нет)', default=True)
+    on_sale = models.BooleanField(verbose_name='В продаже', default=True)
 
     def __str__(self):
         return f'{self.car_brand} {self.car_model} | {self.year_of_issue} года выпуска'
