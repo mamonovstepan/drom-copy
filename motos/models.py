@@ -87,7 +87,7 @@ class MotorcyclePost(models.Model):
     pts = models.BooleanField(verbose_name='Наличие ПТС', default=True)
     is_damgaed = models.BooleanField(verbose_name='Певреждения (на ходу или нет)', default=True)
     on_sale = models.BooleanField(verbose_name='В продаже', default=True)
-    image = models.ImageField(verbose_name='Фото', upload_to=upload_path)
+    image = models.ImageField(verbose_name='Фото', upload_to=upload_path, default='default.jpg')
 
     def __str__(self):
         return f'{self.moto_brand} {self.moto_model} | {self.year_of_issue} года выпуска'
