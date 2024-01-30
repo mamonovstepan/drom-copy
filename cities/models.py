@@ -4,7 +4,7 @@ from django.db import models
 # Модель хранящая области страны
 class Region(models.Model):
     name = models.CharField(verbose_name='Область',
-                              max_length=120, unique=True)
+                            max_length=120, unique=True)
 
     def __str__(self):
         return self.name
