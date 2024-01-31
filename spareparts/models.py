@@ -29,7 +29,7 @@ class SparePart(models.Model):
 
     title = models.CharField(verbose_name='Заголовок', max_length=255)
     price = models.PositiveIntegerField(verbose_name='Цена')
-    image = models.ImageField(verbose_name='Фото', upload_to=upload_path)
+    image = models.ImageField(verbose_name='Фото', upload_to=upload_path, default='default.jpg')
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
     city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
