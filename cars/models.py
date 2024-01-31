@@ -128,6 +128,7 @@ class CarPost(models.Model):
     pts = models.BooleanField(verbose_name='Наличие ПТС', default=True)
     is_damgaed = models.BooleanField(verbose_name='Певреждения (на ходу или нет)', default=True)
     on_sale = models.BooleanField(verbose_name='В продаже', default=True)
+    created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
 
     def __str__(self):
         return f'{self.car_brand} {self.car_model} | {self.year_of_issue} года выпуска'

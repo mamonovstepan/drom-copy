@@ -90,6 +90,7 @@ class MotorcyclePost(models.Model):
     is_damgaed = models.BooleanField(verbose_name='Певреждения (на ходу или нет)', default=True)
     on_sale = models.BooleanField(verbose_name='В продаже', default=True)
     image = models.ImageField(verbose_name='Фото', upload_to=upload_path, default='default.jpg')
+    created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
 
     def __str__(self):
         return f'{self.moto_brand} {self.moto_model} | {self.year_of_issue} года выпуска'
