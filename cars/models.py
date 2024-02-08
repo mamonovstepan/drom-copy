@@ -100,6 +100,21 @@ class CarGeneration(models.Model):
         verbose_name_plural = 'Поколения'
 
 
+# Класс для хранения комплектации модели авто
+class CarEquipment(models.Model):
+    name = models.CharField(verbose_name='Комплектация', max_length=30, unique=True)
+    car_generation = models.ForeignKey(CarGeneration, verbose_name='Поколение',
+                                       related_name='equipment', max_length=50,
+                                       on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Комплектация'
+        verbose_name_plural = 'Комплектации'
+
+
 # Функция для составления пути сохранения фото в соответствии с пользователем
 def upload_path(instance, filename):
     return f'SpareParts/{instance.author.username}/{filename}'
