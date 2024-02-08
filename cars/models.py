@@ -124,6 +124,8 @@ def upload_path(instance, filename):
 class CarPost(models.Model):
     car_brand = models.ForeignKey(CarBrand, verbose_name='Марка авто', on_delete=models.PROTECT)
     car_model = models.ForeignKey(CarModel, verbose_name='Модель авто', on_delete=models.PROTECT)
+    car_generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
+    car_equipment = models.ForeignKey(CarEquipment, verbose_name='Комплектация', on_delete=models.PROTECT)
     year_of_issue = models.PositiveSmallIntegerField(verbose_name='Год выпуска', validators=[MaxValueValidator(date.today().year), MinValueValidator(1900)])
     city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
     price = models.PositiveIntegerField(verbose_name='Стоимость')
@@ -136,7 +138,6 @@ class CarPost(models.Model):
     color = models.CharField(verbose_name='Цвет кузова', max_length=20)
     mileage = models.PositiveIntegerField(verbose_name='Пробег')
     steering_wheel = models.CharField(verbose_name='Расположение руля', max_length=1, choices=STEERING_WHEEL, default='n')
-    generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
     author = models.ForeignKey(User, verbose_name='Автор', on_delete=models.CASCADE)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
     image = models.ImageField(verbose_name='Фото', upload_to=upload_path, default='default.jpg')
