@@ -39,9 +39,21 @@ STEERING_WHEEL = [
 
 # Список хранящий состояние автомобиля
 CONDITION = [
-        ('new', 'Новый'),
-        ('old', 'Б/У'),
-    ]
+    ('new', 'Новый'),
+    ('old', 'Б/У'),
+]
+
+# Список хранящий страну-производитель автомобиля
+COUNTRY = [
+    ('n', 'Не указано'),
+    ('RU', 'Россия'),
+    ('JP', 'Япония'),
+    ('DE', 'Германия'),
+    ('KR', 'Корея'),
+    ('US', 'США'),
+    ('CN', 'Китай'),
+    ('OTH', 'Остальные'),
+]
 
 """ Модели для хранения информации об автомобилях """
 
@@ -126,6 +138,7 @@ class CarPost(models.Model):
     car_model = models.ForeignKey(CarModel, verbose_name='Модель авто', on_delete=models.PROTECT)
     car_generation = models.ForeignKey(CarGeneration, verbose_name='Поколение', on_delete=models.PROTECT)
     car_equipment = models.ForeignKey(CarEquipment, verbose_name='Комплектация', on_delete=models.PROTECT)
+    country_of_origin = models.CharField(verbose_name='Страна производства', max_length=3, choices=COUNTRY, default='n')
     year_of_issue = models.PositiveSmallIntegerField(verbose_name='Год выпуска', validators=[MaxValueValidator(date.today().year), MinValueValidator(1900)])
     city = models.ForeignKey(City, verbose_name='Город', on_delete=models.PROTECT)
     price = models.PositiveIntegerField(verbose_name='Стоимость')
