@@ -117,7 +117,7 @@ class CarEquipment(models.Model):
 
 # Функция для составления пути сохранения фото в соответствии с пользователем
 def upload_path(instance, filename):
-    return f'SpareParts/{instance.author.username}/{filename}'
+    return f'Cars/{instance.author.username}/{filename}'
 
 
 # Класс для хранения объявления о продаже автомобиля
