@@ -87,7 +87,7 @@ class MotorcyclePost(models.Model):
     in_stock = models.BooleanField(verbose_name='Наличие', default=True)
     condition = models.CharField(verbose_name='Состояние', max_length=3, choices=CONDITION, default='new')
     pts = models.BooleanField(verbose_name='Наличие ПТС', default=True)
-    is_damgaed = models.BooleanField(verbose_name='Певреждения (на ходу или нет)', default=True)
+    is_damgaed = models.BooleanField(verbose_name='Повреждения (на ходу или нет)', default=False)
     on_sale = models.BooleanField(verbose_name='В продаже', default=True)
     image = models.ImageField(verbose_name='Фото', upload_to=upload_path, default='default.jpg')
     created_at = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
