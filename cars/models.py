@@ -70,17 +70,9 @@ class ChassisType(models.Model):
         verbose_name_plural = 'Типы кузовов'
 
 
-# Класс для хранения значков
-class CarIcon(models.Model):
-    name = models.ImageField(verbose_name='Значок', unique=True,
-                             upload_to='icons/')
-
-
 # Класс для хранения марки
 class CarBrand(models.Model):
     name = models.CharField(verbose_name='Марка', max_length=30, unique=True)
-    icon = models.ForeignKey(CarIcon, verbose_name='Значок',
-                             on_delete=models.PROTECT, related_name='carbrand')
 
     def __str__(self):
         return self.name
@@ -88,6 +80,14 @@ class CarBrand(models.Model):
     class Meta:
         verbose_name = 'Марка'
         verbose_name_plural = 'Марки'
+
+
+# Класс для хранения значков
+class CarIcon(models.Model):
+    name = models.ImageField(verbose_name='Значок', unique=True)
+    cra_brand = models.ForeignKey(CarBrand, verbose_name='Модель',
+                                  related_name='caricon',
+                                  on_delete=models.PROTECT)
 
 
 # Класс для хранения моделей авто
