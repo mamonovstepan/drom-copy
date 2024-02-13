@@ -60,7 +60,7 @@ COUNTRY = [
 
 # Класс для хранения типа кузова
 class ChassisType(models.Model):
-    name = models.CharField(verbose_name='Кузов', max_length=10, unique=True)
+    name = models.CharField(verbose_name='Кузов', max_length=30, unique=True)
 
     def __str__(self):
         return self.name
@@ -88,6 +88,9 @@ class CarModel(models.Model):
     car_brand = models.ForeignKey(CarBrand, verbose_name='Марка',
                                   related_name='brand', max_length=15,
                                   on_delete=models.PROTECT)
+    chassis_type = models.ForeignKey(ChassisType, verbose_name='Тип кузова',
+                                     related_name='brand', max_length=15,
+                                     on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
