@@ -80,7 +80,7 @@ class CarIcon(models.Model):
 class CarBrand(models.Model):
     name = models.CharField(verbose_name='Марка', max_length=30, unique=True)
     icon = models.ForeignKey(CarIcon, verbose_name='Значок',
-                             on_delete=models.PROTECT)
+                             on_delete=models.PROTECT, related_name='carbrand')
 
     def __str__(self):
         return self.name
@@ -94,10 +94,10 @@ class CarBrand(models.Model):
 class CarModel(models.Model):
     name = models.CharField(verbose_name='Модель', max_length=60, unique=True)
     car_brand = models.ForeignKey(CarBrand, verbose_name='Марка',
-                                  related_name='brand', max_length=15,
+                                  related_name='carmodel', max_length=15,
                                   on_delete=models.PROTECT)
     chassis_type = models.ForeignKey(ChassisType, verbose_name='Тип кузова',
-                                     related_name='brand', max_length=15,
+                                     related_name='carmodel', max_length=15,
                                      on_delete=models.PROTECT)
 
     def __str__(self):

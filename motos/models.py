@@ -56,7 +56,7 @@ class MotorcycleBrand(models.Model):
 class MotorcycleModel(models.Model):
     name = models.CharField(verbose_name='Модель', max_length=60, unique=True)
     motorcicle_brand = models.ForeignKey(MotorcycleBrand, verbose_name='Марка',
-                                         related_name='brand', max_length=15,
+                                         related_name='model', max_length=15,
                                          on_delete=models.PROTECT)
 
     def __str__(self):
