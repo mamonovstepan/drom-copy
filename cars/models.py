@@ -70,9 +70,17 @@ class ChassisType(models.Model):
         verbose_name_plural = 'Типы кузовов'
 
 
+# Класс для хранения значков
+class CarIcon(models.Model):
+    name = models.ImageField(verbose_name='Значок', unique=True,
+                             upload_to='icons/')
+
+
 # Класс для хранения марки
 class CarBrand(models.Model):
     name = models.CharField(verbose_name='Марка', max_length=30, unique=True)
+    icon = models.ForeignKey(CarIcon, verbose_name='Значок',
+                             on_delete=models.PROTECT)
 
     def __str__(self):
         return self.name
