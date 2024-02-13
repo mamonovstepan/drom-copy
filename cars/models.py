@@ -85,7 +85,7 @@ class CarBrand(models.Model):
 # Класс для хранения значков
 class CarIcon(models.Model):
     name = models.ImageField(verbose_name='Значок', unique=True)
-    cra_brand = models.ForeignKey(CarBrand, verbose_name='Модель',
+    car_brand = models.ForeignKey(CarBrand, verbose_name='Модель',
                                   related_name='caricon',
                                   on_delete=models.PROTECT)
 
