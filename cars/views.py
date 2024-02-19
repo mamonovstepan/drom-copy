@@ -1,8 +1,3 @@
-from rest_framework import generics
-from .models import CarIcon
-from .serializers import IconsSerializer
+from django.shortcuts import render
 
-
-class IconsView(generics.ListAPIView):
-    queryset = CarIcon.objects.all()
-    serializer_class = IconsSerializer
+# Create your views here.
